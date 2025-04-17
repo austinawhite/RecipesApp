@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import {Routes, Route, Link} from 'react-router-dom'
+import {Routes, Route, Link, useNavigate} from 'react-router-dom'
 import backupImage from './assets/backupImage.jpg'
 import defaultprofile from './assets/defaultprofile.png'
 
-function Home() {
+function Home({favorites, toggleFavorite}) {
     const [recipes, setRecipes] = useState([]);
+    const navigate = useNavigate();
   
     const getRecipes = async () => {
       try {
@@ -20,6 +21,10 @@ function Home() {
     useEffect(() => {
       getRecipes();
     }, []);
+
+    const isFavorited = (idMeal) => {
+        return favorites?.some((fav) => fav.idMeal === idMeal);
+      };
   
     return (
 
@@ -50,7 +55,7 @@ function Home() {
         <div className="cards">
         {
           recipes.map((recipe) => {
-            const { idMeal, strMeal, strMealThumb, strInstructions, strCategory, strArea } = recipe;
+            const { idMeal, strMeal, strMealThumb, strCategory, strArea } = recipe;
             return (
               <div key={idMeal} className="card">
                 <img
@@ -69,7 +74,11 @@ function Home() {
                 <h3>{strMeal}</h3>
                 <p><strong>Category:</strong> {strCategory}</p>
                 <p><strong>Region:</strong> {strArea}</p>
-                <button onClick={() => handleClick(recipe)}>Favorite</button>
+                <button onClick={() => navigate(`/recipe/${idMeal}`)}>
+  View Details
+</button>
+                <button onClick={() => toggleFavorite(recipe)}>
+                  {isFavorited(idMeal) ? 'Unfavorite' : 'Favorite'}</button>
               </div>
     );
   })
