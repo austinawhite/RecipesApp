@@ -1,6 +1,7 @@
 import backupImage from './assets/backupImage.jpg'
 import defaultprofile from './assets/defaultprofile.png'
 import {Routes, Route, Link, useNavigate} from 'react-router-dom'
+import './App.css'
 
 function MyFavorites({ favorites, toggleFavorite }) {
 
@@ -23,17 +24,18 @@ function MyFavorites({ favorites, toggleFavorite }) {
     />
      </div>
      </div>
-    
+   
 
      <br />
      <br />
+   
 
 
-    <div className="favorites-page">
-      <h2 className="favorites-header">My Favorite Recipes</h2>
+     <div className="homeheader">
+      <h3>My Favorite Recipes</h3>
 
       {favorites.length === 0 ? (
-        <p className="no-favorites">You haven’t favorited any recipes yet.</p>
+        <p className="no-favorites">You have not favorited any recipes yet.</p>
       ) : (
         <div className="cards">
           {favorites.map((recipe) => {
